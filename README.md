@@ -134,10 +134,10 @@ for item in data_list.values():
     menu_id = item['menu_id']
     menu_name = item['menu__name']
     active = item.get("active", False)
-    temp = {'id':id , 'title': title, 'url':url,'active':item.get("active",False)}
+    temp = {'id':id , 'title': title, 'url':url,'active':active}
     if menu_id in result:
         result[menu_id]['child'].append(temp)
-        if item.get("active",False):
+        if item.get("active", False):
             result[menu_id]["active"] =True
     else:
         result[menu_id] = {
