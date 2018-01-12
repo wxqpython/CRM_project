@@ -1,7 +1,7 @@
-# CRM_project中结构化数据相关
+# CRM_project知识点
 
 
-## 数据类型学习笔记
+## CRM_project中结构化数据相关
 
 情况一
 ```
@@ -148,4 +148,18 @@ for item in data_list.values():
 for k,v in result.items():
     print(k,v)
 ```
+
+## CRM_project中rbac实现
+rbac: 全称(Role base access control)，基于角色的权限控制.
+实现逻辑或代码逻辑梳理
+1 设计好表结构，写好models.py
+2 用户登录，获取当前用户所有权限列表，对权限列表结构化后放入Session中
+3 用户再次访问，获取用户请求的URL，与Session中的URL进行比较（基于中间件）
+	获取当前请求的URL：request.path_info
+4 用户菜单如何显示？
+	URL中有正则表过式的不能作为菜单显示
+	
+5 页面显示时，根据权限来控制页面是否显示指定按钮，权根的控制粒度：按钮级别
+
+
 
