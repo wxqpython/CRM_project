@@ -170,7 +170,7 @@ rbac: 全称(Role base access control)，基于角色的权限控制.
 5 页面显示时，根据权限来控制页面是否显示指定按钮，权根的控制粒度：按钮级别
 
 注意前端知识:
-   1  static/templates优先在项目下找，找不到才到各个app/static, app/templates下找，也就是说项目目录优先
+   1  static/templates优先在项目下找或说外层找，找不到才到各个app/static, app/templates下找，也就是说项目目录优先
    2  inclusion_tag 用法
    
 ```
