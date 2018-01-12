@@ -6,27 +6,27 @@ http://www.cnblogs.com/wupeiqi/articles/7444717.html    # 自定义Django admin�
 
 
 一  Django admin工作流程：
-1 注册models_class，生成URL
+1 注册models_class，生成_registry 中model_class 字典
     admin.py注册models_class如models.UserInfo
       from django.template import admin
       from app01 import models
       admin.site.registry(models.UserInfo)
+
+   
+2 admin.site.urls
+  admin.site.urls循环_registry={}字典生成相应URL
+
    生成4个URL分别是如下：
    app01/userinfo/
    app01/userinfo/add/
    app01/userinfo/1/change/
    app01/userinfo/1/delete/
-   
-2 
-
-
-#URL include原理
+其中要深入理解URL include原理：  url(r'^xx', "可以是视图函数，也可以是元组"),
 partterns = [
    url(r'^admin', admin.site.urls),            # admin.site.urls 返回形如（[],None,None）的元组.
    url(r'^backend', include('backend.urls')),  # include 同样返回形如（[],None,None）的元组.
    # 也可以写成形如 include([],None,None) 格式.
  ]
-
 
 
 二  制作arya启动文件
