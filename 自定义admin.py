@@ -1,10 +1,6 @@
 # 自定义Django admin 
 http://www.cnblogs.com/wupeiqi/articles/7444717.html    # 自定义Django admin参考博客
   
-
-
-
-
 一  Django admin工作流程：
 1 注册models_class，生成_registry 中model_class 字典
     admin.py注册models_class如models.UserInfo
