@@ -1,7 +1,7 @@
 # CRM_project知识点
 
 
-## CRM_project中结构化数据相关
+## 一 CRM_project中结构化数据相关
 
 情况一
 ```
@@ -149,7 +149,8 @@ for k,v in result.items():
     print(k,v)
 ```
 
-## CRM_project中rbac实现
+## 二 CRM_project中rbac实现
+```
 rbac: 全称(Role base access control)，基于角色的权限控制.
 实现逻辑或代码逻辑梳理
 1 设计好表结构，写好models.py
@@ -161,5 +162,5 @@ rbac: 全称(Role base access control)，基于角色的权限控制.
 	
 5 页面显示时，根据权限来控制页面是否显示指定按钮，权根的控制粒度：按钮级别
 
-
+```
 
