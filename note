@@ -31,7 +31,29 @@ id    url                                   title                   code
     1 没有登录就是说没有session,是不让访问的
     2 请求的URL 和用户权限列表中的URL是否匹配
     
-添加黑白名单/login/
+
+rematch用法
+	用法一：添加黑白名单/login/
+		import re
+		current_url = request.path_info
+		valid_page_list = [
+		"^/login/$",
+		"^admin.*",
+		]
+		for valid in valid_page_list:
+		    if rematch(valid, current_url):
+		       return None
+
+	re.match()用法二：
+		注意其中^{0}$对匹配的影响
+
+中间件codes的用法
+	中间件加入request.permission_codes = codes用于前端直接运用
+	{% if "del" in request.permission_codes %}
+	    <a>删除</a>
+	{% endif %}
+
+
 
 
 
