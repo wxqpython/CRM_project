@@ -157,10 +157,18 @@ rbac: 全称(Role base access control)，基于角色的权限控制.
 2 用户登录，获取当前用户所有权限列表，对权限列表结构化后放入Session中
 3 用户再次访问，获取用户请求的URL，与Session中的URL进行比较（基于中间件）
 	获取当前请求的URL：request.path_info
+        其中有request.permission_codes/re.match的补充
+	
 4 用户菜单如何显示？
-	URL中有正则表过式的不能作为菜单显示
+	1，URL中有正则表过式的不能作为菜单显示
+	2，菜单默认选中，
+	3，二级菜单
+	实现这个3点就要再定义下models class: Menu/再把权限+权限组+菜单列表直接写入Session用于菜单展示
+	request.session[settings.PERMISSION_MENU_SESSION_KEY] = permission_memu_list
 	
 5 页面显示时，根据权限来控制页面是否显示指定按钮，权根的控制粒度：按钮级别
+
+
 
 ```
 
