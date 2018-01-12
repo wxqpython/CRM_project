@@ -111,6 +111,7 @@ for k,v in permission_menu_dict.items():
 ```
 
 ```
+ 总结
 # 总体思路; 先加"child":[],再把列表变为字典，再把字典变为列表
 # 运用知识：append(可变数据类型)时会引用同一个内存地址
 ```
