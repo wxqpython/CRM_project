@@ -42,7 +42,8 @@ rematch用法
 		]
 		for valid in valid_page_list:
 		    if rematch(valid, current_url):
-		       return None
+		       #return None
+		       print(current_url)
 
 	re.match()用法二：
 		注意其中^{0}$对匹配的影响
@@ -58,8 +59,6 @@ rematch用法
 
 
 自动生成菜单时，访问URL的不同，显示的菜单展开也是不同的.
-
-
 
 
 
