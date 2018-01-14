@@ -25,13 +25,13 @@ partterns = [
  ]
 
 
-二  制作arya启动文件
-    1  创建一个arya 的app
+二  制作stack启动文件
+    1  创建一个stack 的app
     2  settings.py 注册app
-        -  'arya.apps.AryaConfig',
-    3  在arya apps.py文件定义ready方法
-      class AryaConfig(AppConfig):
-       name = 'arya'
+        -  'stack.apps.StackConfig',
+    3  在stack apps.py文件定义ready方法
+      class StackConfig(AppConfig):
+       name = 'stack'
 
        def ready(self):
            from django.utils.module_loading import autodiscover_modules
@@ -48,24 +48,24 @@ partterns = [
                   如果在一个程序先运行的文件改变了实例数据或属性，后运行的文件导入后读这个实例就会有数据或属性
             
      示例：
-     随便定义一个实例化对象的文件arya/service.v1
-      class AryaSite():
+     随便定义一个实例化对象的文件stack/service.v1
+      class StackSite():
           def __init__(self):
               self._registry = {}
 
           def register(self,class_name,config_class):
               self._registry[class_name] = config_class
 
-         site = AryaSite()
+         site = StackSite()
             
      在我们定义的启动文件app01/xxx.py中写入代码(因为会先执行xxx.py)
-      from arya.service import v1
+      from stack.service import v1
       v1.site.register("k1","v1")
       v1.site.register("k2","v2")
       v1.site.name = 'wxq'
       
       项目urls.py中写入
-      from arya.service import v1
+      from stack.service import v1
       print(v1.site._registry)
       print(v1.site.name)
       
