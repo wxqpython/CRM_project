@@ -14,15 +14,70 @@ class UserInfoForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(UserInfoForm,self).__init__(*args, **kwargs)
         self.fields['user_type'].choices = models.UserType.objects.values_list('id','caption')
+
+情况二： 回顾下正常的写法
+# Form 的情况直接写在字段下面
+class TestForm(forms.Form):
+    username = fields.CharField(  # 静态字段
+        required=True,
+        min_length=6,
+        max_length=8,
+        error_messages={"required":"用户名不能为空", "min_length":"最少6位"}，
+        widget = widgets.TextInput(attrs={'class': 'form-control'})  # 插件
+  )
+
+
+# ModelForm  时明确指明哪个字段
+from django.forms import Form
+from django.forms import ModelForm
+from django.forms import fields
+from django.forms import widgets as fwidgets
+from app01 import models
+class TestForm(ModelForm):
+    class Meta:
+        model = models.Book
+        fields = "__all__" # 可以是["","",]
+        labels = {
+            'title':"书名",
+            "price":"价格",
+        }
+        error_messages = {
+            "title":{"requried":"书名不能为空",},
+        }
+        widgets={
+            "pubDate":fwidgets.DateInput(attrs={"type":"date","class":"c1"})
+        }
+
+
+
+  
+情况三： 有时可能更改默认插件
+
+from django.forms import ModelForm
+
+#Better way（ModelForm）    
+class MyForm(ModelForm):
+
+    class Meta:
+        model = MyModel
+
+    def __init__(self, *args, **kwargs):
+        super(MyForm, self).__init__(*args, **kwargs)
+        self.fields['title'].widget = forms.Textarea    # 明确哪个字段需要重写
         
-情况二： 
+# the best way
+from django.forms import ModelForm
 
+class MyForm(ModelForm):
 
+    class Meta:
+        model = MyModel
+        widgets = {
+            'title': fields.Textarea,       # 明确哪个字段需要重写
+        }
 
-
-
-情况三：重写ModelForm widget.attrs
-
+情况四：重写ModelForm widget.attrs
+当前端录灵活到一个TForm对应多张表时，就不能指明哪个字段了
 class TForm(ModelForm):
     def __init__(self,*args,**kwargs):
         super(TForm,self).__init__(*args,**kwargs)
