@@ -1,0 +1,40 @@
+情况一： 重写Form choices插件
+
+class UserInfoForm(forms.Form):
+    # username = models.CharField(max_length=32)    <-- models
+    username = fields.CharField(max_length=32)
+    # email = models.EmailField()    <-- models
+    email = fields.EmailField()
+    # user_type = models.ForeignKey(to='UserType',to_field='id')    <-- models
+    user_type = fields.ChoiceField(
+        choices=models.UserType.objects.values_list('id','caption')
+    )
+
+    # 下面的操作是让数据在网页上实时更新。
+    def __init__(self, *args, **kwargs):
+        super(UserInfoForm,self).__init__(*args, **kwargs)
+        self.fields['user_type'].choices = models.UserType.objects.values_list('id','caption')
+        
+情况二： 
+
+
+
+
+
+情况三：重写ModelForm widget.attrs
+
+class TForm(ModelForm):
+    def __init__(self,*args,**kwargs):
+        super(TForm,self).__init__(*args,**kwargs)
+        for field_name in self.base_fields:
+            field = self.base_fields[field_name]
+            field.widget.attrs.update({"class":"form-control"})
+    xx = fields.CharField()
+    class Meta:
+        model = models.UserInfo
+        fields = "__all__"
+        
+        
+            
+            
+            
