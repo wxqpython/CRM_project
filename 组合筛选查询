@@ -34,8 +34,14 @@ models.UserInfo._meta.get_field[]
    gender是一个models.IntegerField对象，里面封装了(verbose_name="性别",choices=gender_choices,default=2)值
    那么gender就有属性verbose_name/choices/default/
  
-models.UserInfo._meta.app_label   获取表的应用app01
-models.UserInfo._meta.model_name  获取表的小写名称userinfo
+    models.UserInfo._meta.app_label   获取表的应用app01
+    models.UserInfo._meta.model_name  获取表的小写名称userinfo
+    models.UserInfo._meta.get_field("gender").choices       # 获取属性
+    models.UserInfo._meta.get_field("gender").verbose_name  # 获取属性
+
+
+2 再来理解这句话'''dp = models.ForeignKey(verbose_name="部门",to="DePart")'''
+   
 
 
 
@@ -47,7 +53,30 @@ models.UserInfo._meta.model_name  获取表的小写名称userinfo
 
 
 生成器、迭代器、可迭代对象
-    迭代器：能够作用于next()函数，不断向后返回值，称为迭代器
+    迭代器：能够作用于next()函数，不断向后返回值，称为迭代器 iter([1,2,3,4])
     生成器：yield返回，并且可以next(),是一种特殊的迭代器
-    可迭代对象：一个对象有__iter__()方法，并返回迭代器(包括生成器),那么这个对象可for循环
+    可迭代对象：对象或一个类中有__iter__()方法，并返回迭代器(包括生成器),那么这个对象可for循环
+
+class Foo():
+   def __init__(self,queryset):
+       self.queryset = queryset
+
+   def __iter__(self):
+       yield '<a>全部</a>'
+       for row in self.queryset:
+           yield mark_safe('<a>运营</a>')
+      
+class Changelist():
+    def __init__(self,config):
+        self.comb_filter = config.comb_filter
+    # def show_comb_search(self, ):   # 这里循环好了数据，但前端还要循环一次，很不好，我们把这里变为生成器不是很good么,天才
+    #     result = []
+    #     for name in self.comb_filter:  # ['gender','status','dp']
+    #         row = Foo(models.UserInfo.objects.all())  # 所有用户变为一个列表或可循环对象
+    #         result.append(row)
+    def show_comb_search(self, ):
+        for name in self.comb_filter:  # ['gender','status','dp']
+            yield Foo(models.UserInfo.objects.all())  # 所有用户变为一个列表或可循环对象,直接yield
+        
+
 
