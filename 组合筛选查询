@@ -25,7 +25,7 @@ class UserInfo(models.Model):
         return self.name
 '''
 
-一 ORM models.py相关知识
+一、 ORM models.py相关知识
 
 models.UserInfo._meta.get_field[]
 
@@ -81,7 +81,7 @@ class Foo():
                 yield mark_safe('<a>{0}</a>'.format(text))
 
 
-生成器、迭代器、可迭代对象
+二、生成器、迭代器、可迭代对象
     迭代器：能够作用于next()函数，不断向后返回值，称为迭代器 iter([1,2,3,4])
     生成器：yield返回，并且可以next(),是一种特殊的迭代器
     可迭代对象：对象或一个类中有__iter__()方法，并返回迭代器(包括生成器),那么这个对象可for循环
