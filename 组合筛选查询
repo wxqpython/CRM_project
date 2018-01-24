@@ -75,11 +75,10 @@ class Foo():
            if self.is_choice:  # self.queryset = ((1,"在线"), (2,"离线"))
                 nid=obj[0]
                 text = obj[1]
-           yield mark_safe('<a>运营</a>')
-
-
-
-
+                yield mark_safe('<a>{0}</a>'.format(text))
+            else:
+                text = str(obj)  # obj就是dp对象，str()执行DePart的__str__()方法
+                yield mark_safe('<a>{0}</a>'.format(text))
 
 
 生成器、迭代器、可迭代对象
