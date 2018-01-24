@@ -54,12 +54,28 @@ models.UserInfo._meta.get_field[]
         _filed = models.UserInfo._meta.get_field(n)  # _field 就是app01.UserInfo.gender的django.db.models.fields.ForeignKey类型
         print(_field.choices)
         if type(_field) == ForeignKey:
-            # 跨表找对象: 如dp外键
-            yield Foo(models.UserInfo.objects.all())
+            # 跨表找数据: 如dp外键
+            #_field.rel.to 就是dp对应的"DePart"表app01.models.DePart
+            
+            yield Foo(_field.rel.to.objects.all())   # 跨表找数据
         else:
             yield Foo(_field.choices, is_choice=True)   # 其实封装的元组 ((1,"在线"), (2,"离线"))
 
 
+
+
+class Foo():
+   def __init__(self,queryset,is_choice=False):
+       self.queryset = queryset
+       self.is_choice = is_choice
+
+   def __iter__(self):
+       yield '<a>全部</a>'
+       for row in self.queryset:
+           if self.is_choice:  # self.queryset = ((1,"在线"), (2,"离线"))
+                nid=obj[0]
+                text = obj[1]
+           yield mark_safe('<a>运营</a>')
 
 
 
