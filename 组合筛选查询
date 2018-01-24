@@ -1,0 +1,53 @@
+组合筛选用到知识很多，也很神奇就出现功能了，这里做个记录
+
+先有如下一个models.py UserInfo表
+'''
+class UserInfo(models.Model):
+    name = models.CharField(verbose_name="用户名",max_length=32)
+    pwd = models.CharField(verbose_name="密码",max_length=32)
+
+    gender_choices = (
+        (1,'男'),
+        (2,'女'),
+    )
+    gender = models.IntegerField(verbose_name="性别",choices=gender_choices,default=2)
+
+    status_choices = (
+        (1,"在线"),
+        (2,"离线")
+    )
+    status = models.IntegerField(verbose_name="状态",choices=status_choices,default=1)
+
+    dp = models.ForeignKey(verbose_name="部门",to="DePart")
+    class Meta:
+        verbose_name_plural="用户表"
+    def __str__(self):
+        return self.name
+'''
+
+一 ORM models.py相关知识
+
+models.UserInfo._meta.get_field[]
+
+1 先来理解这句话'''gender = models.IntegerField(verbose_name="性别",choices=gender_choices,default=2) '''
+
+   gender是一个models.IntegerField对象，里面封装了(verbose_name="性别",choices=gender_choices,default=2)值
+   那么gender就有属性verbose_name/choices/default/
+ 
+models.UserInfo._meta.app_label   获取表的应用app01
+models.UserInfo._meta.model_name  获取表的小写名称userinfo
+
+
+
+
+
+
+
+
+
+
+生成器、迭代器、可迭代对象
+  生成器：yield返回，并且可以next(),是一种特殊的迭代器
+  迭代器：能够作用于next()函数，不断向后返回值，称为迭代器
+  可迭代对象：
+
