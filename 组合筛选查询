@@ -36,14 +36,28 @@ models.UserInfo._meta.get_field[]
  
     models.UserInfo._meta.app_label   获取表的应用app01
     models.UserInfo._meta.model_name  获取表的小写名称userinfo
+
     models.UserInfo._meta.get_field("gender").choices       # 获取属性
     models.UserInfo._meta.get_field("gender").verbose_name  # 获取属性
+    
+    那么就有神奇的一步：
+    L = ['gender','status']
+    for n in L:
+        _filed = models.UserInfo._meta.get_field(n)  # _field 就是app01.UserInfo.gender的django.db.models.fields.IntegerField类型
+        print(_field.choices)
 
 
 2 再来理解这句话'''dp = models.ForeignKey(verbose_name="部门",to="DePart")'''
-   
-
-
+     
+    L = ['dp']   
+    for n in L:
+        _filed = models.UserInfo._meta.get_field(n)  # _field 就是app01.UserInfo.gender的django.db.models.fields.ForeignKey类型
+        print(_field.choices)
+        if type(_field) == ForeignKey:
+            # 跨表找对象: 如dp外键
+            yield Foo(models.UserInfo.objects.all())
+        else:
+            yield Foo(_field.choices, is_choice=True)   # 其实封装的元组 ((1,"在线"), (2,"离线"))
 
 
 
@@ -58,8 +72,9 @@ models.UserInfo._meta.get_field[]
     可迭代对象：对象或一个类中有__iter__()方法，并返回迭代器(包括生成器),那么这个对象可for循环
 
 class Foo():
-   def __init__(self,queryset):
+   def __init__(self,queryset,is_choice=False):
        self.queryset = queryset
+       self.is_choice = is_choice
 
    def __iter__(self):
        yield '<a>全部</a>'
