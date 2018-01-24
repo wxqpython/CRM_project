@@ -1,0 +1,61 @@
+搜索框搜索功能和下拉框批量执行任务相关半成品代码示例：
+
+# 前端
+    <div class="container">
+
+        <div style="margin: 5px auto">
+            <form class="form-inline" method="get">
+              <div class="form-group">
+                <input type="text" name="key" value="{{ key }}" class="form-control"  placeholder="请输入关键字">
+              </div>
+
+              <button type="submit" class="btn btn-info">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+              </button>
+            </form>
+        </div>
+        <div  style="margin: 5px auto">
+              <form class="form-inline" method="post">
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <select name="action" class="form-control">
+                          <option value="">请选择操作</option>
+                          <option value="multi_install">批量装机</option>
+                          <option value="multi_monitor">批量添加监控</option>
+                      </select>
+                  </div>
+
+                  <input type="submit" class="btn btn-info" value="提交">
+            </form>
+        </div>
+        
+# app01/views.py
+
+from django.shortcuts import render,HttpResponse,redirect
+
+class Action():
+    def multi_install(request):
+        print("装机去。。。")
+        return HttpResponse("正在装机，你信不。。。。")
+
+    def multi_monitor(request):
+        print("监控去。。。")
+
+action_obj = Action()
+def test(request):
+
+    if request.method == "GET":
+        key=request.GET.get("key")
+        key  = key if key else ""
+        return render(request,'test.html',{"key":key})
+    elif request.method == 'POST':
+        action=request.POST.get("action")
+        print(action)
+        func=getattr(action_obj,action,None)
+        if func:
+            response = func()
+            if response:
+                return response
+        return render(request, 'test.html')
+        
+        
