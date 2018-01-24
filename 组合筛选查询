@@ -109,4 +109,13 @@ class Changelist():
             yield Foo(models.UserInfo.objects.all())  # 所有用户变为一个列表或可循环对象,直接yield
         
 
+三、URL写入组合筛选
+request,name
+self.name = name
+self.params = copy.deepcopy(request.GET)
+self.params._mutable = True
+
+
+from django.http import QueryDict
+QueryDict.pop()
 
