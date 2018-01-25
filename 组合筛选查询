@@ -39,6 +39,7 @@ models.UserInfo._meta.get_field[]
 
     models.UserInfo._meta.get_field("gender").choices       # 获取属性
     models.UserInfo._meta.get_field("gender").verbose_name  # 获取属性
+    models.UserInfo._meta.get_field('dp').rel.to  #获取外键的表对象app01.models.DePart
     
     那么就有神奇的一步：
     L = ['gender','status']
@@ -52,13 +53,15 @@ models.UserInfo._meta.get_field[]
     L = ['dp']   
     for n in L:
         _filed = models.UserInfo._meta.get_field(n)  # _field 就是app01.UserInfo.gender的django.db.models.fields.ForeignKey类型
-        print(_field.choices)
+        print(_field.verbose_name)
+        print(type(_field))    # 可以看到ForeignKey类型
+        from django.db.models.fields import ForeignKey
         if type(_field) == ForeignKey:
-            # 跨表找数据: 如dp外键
+            #如dp外键这种就要 跨表找数据: 
             #_field.rel.to 就是dp对应的"DePart"表app01.models.DePart
             
             yield Foo(_field.rel.to.objects.all())   # 跨表找数据
-        else:
+        else: #还可以再做判断
             yield Foo(_field.choices, is_choice=True)   # 其实封装的元组 ((1,"在线"), (2,"离线"))
 
 
