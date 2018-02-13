@@ -17,6 +17,24 @@ obj2 = Foo.get_instance()
 print(obj1,obj2)
 
 
+基于这种模式的变型
+class Foo():
+    instance = None
+    @classmethod
+    def get_obj(cls):
+        if not Foo.instance:
+            cls.instance = cls()
+        return cls.instance
+
+def Bar():
+    return Foo.get_obj()
+
+a=Bar()
+b=Bar()
+print(a,b)
+
+
+
 
 3  改写object.__new__方法实现单例
 
