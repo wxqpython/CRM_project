@@ -33,9 +33,6 @@ a=Bar()
 b=Bar()
 print(a,b)
 
-
-
-
 3  改写object.__new__方法实现单例
 
 class Foo(object):
